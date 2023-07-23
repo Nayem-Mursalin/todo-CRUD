@@ -20,7 +20,7 @@ const db = mysql2.createConnection({
 });
 
 app.get('/task', (req, res) => {
-    const q = `select * from user`;
+    const q = `select * from task`;
     db.query(q, (err, data) => {
         if (err) return res.json(err);
         return res.json(data);
@@ -28,12 +28,12 @@ app.get('/task', (req, res) => {
 });
 
 app.post("/task", (req, res) => {
-    const q = "INSERT INTO user(`username`, `email`, `password`) VALUES (?)";
+    // const q = "INSERT INTO user(`username`, `email`, `password`) VALUES (?)";
+    const q = "INSERT INTO `task` ( `Task_name`, `user_email`) VALUES (?);"
 
     const values = [
-        req.body.username,
-        req.body.email,
-        req.body.password
+        req.body.Task_name,
+        req.body.email
     ];
 
     db.query(q, [values], (err, data) => {
@@ -43,26 +43,25 @@ app.post("/task", (req, res) => {
 });
 
 app.delete("/task/:id", (req, res) => {
-    const bookId = req.params.id;
-    const q = " DELETE FROM user WHERE email = ? ";
+    const taskId = req.params.id;
+    const q = " DELETE FROM task WHERE task_id = ? ";
 
-    db.query(q, [bookId], (err, data) => {
+    db.query(q, [taskId], (err, data) => {
         if (err) return res.send(err);
         return res.json(data);
     });
 });
 
 app.put("/edit/:id", (req, res) => {
-    const bookId = req.params.id;
-    const q = "UPDATE user SET `username`= ?, `email`= ?, `password`= ? WHERE email = ? ";
+    const taskId = req.params.id;
+    const q = "UPDATE task SET `Task_name`= ?, `task_status`= ?  WHERE task_id = ? ";
 
     const values = [
-        req.body.username,
-        req.body.email,
-        req.body.password
+        req.body.task_name,
+        req.body.task_status,
     ];
 
-    db.query(q, [...values, bookId], (err, data) => {
+    db.query(q, [...values, taskId], (err, data) => {
         if (err) return res.send(err);
         return res.json(data);
     });
