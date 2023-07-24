@@ -8,6 +8,18 @@ const loadTask = async () => {
     itemsArray = data;
 }
 
+document.querySelector("#enter").addEventListener("click", () => {
+    const item = document.querySelector("#item")
+    createItem(item)
+})
+
+document.querySelector("#item").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
+        const item = document.querySelector("#item")
+        createItem(item)
+    }
+})
+
 const displayTask = itemsArray => {
     console.log(itemsArray);
     // const dislayController = document.getElementsByClassName('.to-do-list');
@@ -67,6 +79,7 @@ function deleteItem(i) {
         });
 
     itemsArray.splice(i, 1);
+    location.reload();
 
 }
 
@@ -91,7 +104,7 @@ function activateSaveListeners() {
             // updateItem(inputs[i].value, i);
             updateController[i].style.display = "none";
             inputs[i].disabled = true;
-            // console.log(inputs[i].value);
+            console.log(inputs[i].value);
 
             const updatedTaskData = {
                 task_name: `${inputs[i].value}`,
@@ -109,10 +122,12 @@ function activateSaveListeners() {
                 .then(response => response.json())
                 .then(data => {
                     console.log('User updated successfully:', data);
+
                 })
                 .catch(error => {
                     console.error('Error updating user:', error);
                 });
+            // location.reload();
         })
     })
 }
@@ -123,6 +138,7 @@ function activateCancelListeners() {
     const inputs = document.querySelectorAll(".input-controller textarea")
     cancelBtn.forEach((cB, i) => {
         cB.addEventListener("click", () => {
+            location.reload();
             updateController[i].style.display = "none";
             inputs[i].disabled = true;
             inputs[i].style.border = "none";
@@ -131,15 +147,38 @@ function activateCancelListeners() {
 }
 
 
+
 function createItem(item) {
-    itemsArray.push(item.value)
+    // itemsArray.push(item.value)
+    console.log(item.value);
+    const newTask = {
+        Task_name: `${item.value}`,
+        email: "a@b.com",
+    };
+
+    fetch('http://localhost:5500/task/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newTask),
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('New Task created:', data);
+            location.reload();
+        })
+        .catch(error => {
+            console.error('Error creating Task:', error);
+        });
+
 }
 
 
 
-function updateItem(text, i) {
-    itemsArray[i] = text
-}
+// function updateItem(text, i) {
+//     itemsArray[i] = text
+// }
 
 
 

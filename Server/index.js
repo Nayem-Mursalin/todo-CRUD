@@ -28,7 +28,6 @@ app.get('/task', (req, res) => {
 });
 
 app.post("/task", (req, res) => {
-    // const q = "INSERT INTO user(`username`, `email`, `password`) VALUES (?)";
     const q = "INSERT INTO `task` ( `Task_name`, `user_email`) VALUES (?);"
 
     const values = [
@@ -58,7 +57,7 @@ app.put("/edit/:id", (req, res) => {
 
     const values = [
         req.body.task_name,
-        req.body.task_status,
+        req.body.task_status || 'NO',
     ];
 
     db.query(q, [...values, taskId], (err, data) => {
