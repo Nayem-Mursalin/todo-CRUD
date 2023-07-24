@@ -14,21 +14,23 @@
 </head>
 
 <body>
-    <form action="./js/login.js" class="login-form">
+    <form class="login-form" id="login-form">
         <h1>Login Form</h1>
         <div class="formcontainer">
             <hr />
             <div class="container">
                 <label for="email"><strong>Email</strong></label>
-                <input type="email" placeholder="Enter Email" name="email" required>
-                <label for="psw"><strong>Password</strong></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
+                <input type="email" id="email" placeholder="Enter Email" name="email" required>
+                <label for="password"><strong>Password</strong></label>
+                <input type="password" id="password" placeholder="Enter Password" name="password" required>
             </div>
-            <button class="button" type="submit">Login</button>
+            <button id="login-btn" type="submit">Login</button>
             <div class="container alter" style="background-color: #eee">
-                <span class="psw"><a href="./register.html"> Don't Have Any Account?</a></span>
+                <span class="password"><a href="./register.html"> Don't Have Any Account?</a></span>
             </div>
     </form>
+
+    <script src="./js/login.js"></script>
 </body>
 
 </html>
